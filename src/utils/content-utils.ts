@@ -1,9 +1,13 @@
 import { type CollectionEntry, getCollection } from "astro:content";
-import I18nKey from "@i18n/i18nKey";
+import I18nKey from "@i18n/i18n-keys";
 import { i18n } from "@i18n/translation";
 import { getCategoryUrl } from "@utils/url-utils.ts";
 
-// // Retrieve posts and sort them by publication date
+/**
+ * Retrieves all blog posts and sorts them by publication date (newest first)
+ * Filters out draft posts in production environment
+ * @returns Promise<CollectionEntry<"posts">[]> - Array of sorted blog posts
+ */
 async function getRawSortedPosts() {
 	const allBlogPosts = await getCollection("posts", ({ data }) => {
 		return import.meta.env.PROD ? data.draft !== true : true;
@@ -17,6 +21,10 @@ async function getRawSortedPosts() {
 	return sorted;
 }
 
+/**
+ * Gets sorted posts with navigation links (next/previous) added to each post
+ * @returns Promise<CollectionEntry<"posts">[]> - Array of posts with navigation data
+ */
 export async function getSortedPosts() {
 	const sorted = await getRawSortedPosts();
 
@@ -31,10 +39,16 @@ export async function getSortedPosts() {
 
 	return sorted;
 }
+
 export type PostForList = {
 	slug: string;
 	data: CollectionEntry<"posts">["data"];
 };
+
+/**
+ * Gets a lightweight list of posts without body content for listing pages
+ * @returns Promise<PostForList[]> - Array of posts with only slug and metadata
+ */
 export async function getSortedPostsList(): Promise<PostForList[]> {
 	const sortedFullPosts = await getRawSortedPosts();
 
@@ -51,6 +65,10 @@ export type Tag = {
 	count: number;
 };
 
+/**
+ * Gets a list of all tags used in blog posts with their usage count
+ * @returns Promise<Tag[]> - Array of tags sorted alphabetically with count
+ */
 export async function getTagList(): Promise<Tag[]> {
 	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
 		return import.meta.env.PROD ? data.draft !== true : true;
@@ -78,6 +96,10 @@ export type Category = {
 	url: string;
 };
 
+/**
+ * Gets a list of all categories used in blog posts with their usage count and URLs
+ * @returns Promise<Category[]> - Array of categories sorted alphabetically with count and URL
+ */
 export async function getCategoryList(): Promise<Category[]> {
 	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
 		return import.meta.env.PROD ? data.draft !== true : true;

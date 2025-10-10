@@ -1,0 +1,39 @@
+---
+interface Props {
+	class?: string;
+	count?: number;
+}
+
+const { class: className, count = 3 } = Astro.props;
+---
+
+<div class:list={["space-y-3", className]}>
+  {Array.from({ length: count }).map(() => (
+    <div class="animate-pulse p-4 border-b border-[var(--line-divider)] last:border-b-0">
+      <!-- Title skeleton -->
+      <div class="h-5 bg-[var(--skeleton-bg)] rounded w-3/4 mb-2"></div>
+      
+      <!-- Excerpt skeleton -->
+      <div class="space-y-2">
+        <div class="h-4 bg-[var(--skeleton-bg)] rounded w-full"></div>
+        <div class="h-4 bg-[var(--skeleton-bg)] rounded w-5/6"></div>
+        <div class="h-4 bg-[var(--skeleton-bg)] rounded w-2/3"></div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+</style>

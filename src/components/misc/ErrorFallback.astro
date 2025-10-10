@@ -1,0 +1,82 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	error?: Error | string;
+	title?: string;
+	message?: string;
+	showRetry?: boolean;
+	showHome?: boolean;
+	class?: string;
+}
+
+const {
+	error,
+	title = "Something went wrong",
+	message = "We encountered an unexpected error. Please try again or return to the home page.",
+	showRetry = true,
+	showHome = true,
+	class: className,
+} = Astro.props;
+
+const errorMessage = error instanceof Error ? error.message : error;
+---
+
+<div class:list={["error-fallback card-base p-6 rounded-[var(--radius-large)] border-2 border-red-200 dark:border-red-800", className]}>
+  <div class="flex items-center gap-3 mb-4">
+    <Icon name="material-symbols:error-outline" class="text-2xl text-red-500" />
+    <h2 class="text-xl font-semibold text-red-700 dark:text-red-300">{title}</h2>
+  </div>
+  
+  <p class="text-[var(--normal-text)] mb-4">{message}</p>
+  
+  {errorMessage && (
+    <details class="mb-4">
+      <summary class="cursor-pointer text-sm text-[var(--meta-text)] hover:text-[var(--primary)] transition">
+        Show error details
+      </summary>
+      <div class="mt-2 p-3 bg-[var(--inline-code-bg)] rounded-md">
+        <p class="text-red-600 dark:text-red-400 text-sm font-mono">{errorMessage}</p>
+      </div>
+    </details>
+  )}
+  
+  <div class="flex gap-3 flex-wrap">
+    {showRetry && (
+      <button 
+        onclick="window.location.reload()"
+        class="btn-regular px-4 py-2 rounded-lg bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)] active:bg-[var(--btn-regular-bg-active)] transition flex items-center gap-2"
+      >
+        <Icon name="material-symbols:refresh" class="text-lg" />
+        Try Again
+      </button>
+    )}
+    
+    {showHome && (
+      <a 
+        href="/"
+        class="btn-plain px-4 py-2 rounded-lg hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] transition flex items-center gap-2"
+      >
+        <Icon name="material-symbols:home" class="text-lg" />
+        Go Home
+      </a>
+    )}
+  </div>
+</div>
+
+<style>
+  .error-fallback {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

@@ -7,6 +7,10 @@ import type {
 } from "./types/config";
 import { LinkPreset } from "./types/config";
 
+/**
+ * Main site configuration
+ * Contains basic site information, theme settings, banner configuration, and table of contents settings
+ */
 export const siteConfig: SiteConfig = {
 	title: "Fuwari",
 	subtitle: "Demo Site",
@@ -39,6 +43,10 @@ export const siteConfig: SiteConfig = {
 	],
 };
 
+/**
+ * Navigation bar configuration
+ * Defines the links that appear in the main navigation menu
+ */
 export const navBarConfig: NavBarConfig = {
 	links: [
 		LinkPreset.Home,
@@ -52,6 +60,10 @@ export const navBarConfig: NavBarConfig = {
 	],
 };
 
+/**
+ * Profile configuration for the author/site owner
+ * Contains avatar, name, bio, and social media links
+ */
 export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/demo-avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "Lorem Ipsum",
@@ -77,12 +89,20 @@ export const profileConfig: ProfileConfig = {
 	],
 };
 
+/**
+ * License configuration for the site content
+ * Defines the license type and URL for legal information
+ */
 export const licenseConfig: LicenseConfig = {
 	enable: true,
 	name: "CC BY-NC-SA 4.0",
 	url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
 };
 
+/**
+ * Configuration for Expressive Code syntax highlighting
+ * Sets the theme for code blocks in blog posts
+ */
 export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	// Note: Some styles (such as background color) are being overridden, see the astro.config.mjs file.
 	// Please select a dark theme, as this blog theme currently only supports dark background color

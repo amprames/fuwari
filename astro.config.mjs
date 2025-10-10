@@ -4,9 +4,9 @@ import tailwind from "@astrojs/tailwind";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import swup from "@swup/astro";
+import { defineConfig } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
-import { defineConfig } from "astro/config";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeComponents from "rehype-components"; /* Render the custom directive content */
 import rehypeKatex from "rehype-katex";
@@ -15,14 +15,15 @@ import remarkDirective from "remark-directive"; /* Handle directives */
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
+import { visualizer } from "rollup-plugin-visualizer";
 import { expressiveCodeConfig } from "./src/config.ts";
+import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
 import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
-import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 
 // https://astro.build/config
 export default defineConfig({
@@ -49,10 +50,55 @@ export default defineConfig({
 		}),
 		icon({
 			include: {
-				"preprocess: vitePreprocess(),": ["*"],
-				"fa6-brands": ["*"],
-				"fa6-regular": ["*"],
-				"fa6-solid": ["*"],
+				"fa6-brands": [
+					"github",
+					"linkedin",
+					"twitter",
+					"mastodon",
+					"steam",
+					"creative-commons",
+				],
+				"fa6-regular": ["envelope", "copyright", "address-card"],
+				"fa6-solid": [
+					"arrow-rotate-left",
+					"rss",
+					"link",
+					"tag",
+					"calendar",
+					"arrow-up-right-from-square",
+				],
+				"material-symbols": [
+					"search",
+					"wb-sunny-outline-rounded",
+					"dark-mode-outline-rounded",
+					"settings-outline-rounded",
+					"close-rounded",
+					"expand-more-rounded",
+					"expand-less-rounded",
+					"arrow-back-rounded",
+					"arrow-forward-rounded",
+					"keyboard-arrow-up-rounded",
+					"home-outline-rounded",
+					"palette-outline",
+					"error-outline",
+					"refresh",
+					"search-off",
+					"home",
+					"library-books",
+					"arrow-back",
+					"calendar-today-outline-rounded",
+					"edit-calendar-outline-rounded",
+					"book-2-outline-rounded",
+					"tag-rounded",
+					"notes-rounded",
+					"schedule-outline-rounded",
+					"chevron-left-rounded",
+					"chevron-right-rounded",
+					"copyright-outline-rounded",
+					"more-horiz",
+					"menu-rounded",
+					"radio-button-partial-outline",
+				],
 			},
 		}),
 		expressiveCode({
@@ -61,12 +107,12 @@ export default defineConfig({
 				pluginCollapsibleSections(),
 				pluginLineNumbers(),
 				pluginLanguageBadge(),
-				pluginCustomCopyButton()
+				pluginCustomCopyButton(),
 			],
 			defaultProps: {
 				wrap: true,
 				overridesByLang: {
-					'shellsession': {
+					shellsession: {
 						showLineNumbers: false,
 					},
 				},
@@ -76,7 +122,8 @@ export default defineConfig({
 				borderRadius: "0.75rem",
 				borderColor: "none",
 				codeFontSize: "0.875rem",
-				codeFontFamily: "'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+				codeFontFamily:
+					"'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
 				codeLineHeight: "1.5rem",
 				frames: {
 					editorBackground: "var(--codeblock-bg)",
@@ -87,19 +134,19 @@ export default defineConfig({
 					editorActiveTabIndicatorBottomColor: "var(--primary)",
 					editorActiveTabIndicatorTopColor: "none",
 					editorTabBarBorderBottomColor: "var(--codeblock-topbar-bg)",
-					terminalTitlebarBorderBottomColor: "none"
+					terminalTitlebarBorderBottomColor: "none",
 				},
 				textMarkers: {
 					delHue: 0,
 					insHue: 180,
-					markHue: 250
-				}
+					markHue: 250,
+				},
 			},
 			frames: {
 				showCopyToClipboardButton: false,
-			}
+			},
 		}),
-        svelte(),
+		svelte(),
 		sitemap(),
 	],
 	markdown: {
@@ -154,6 +201,14 @@ export default defineConfig({
 		],
 	},
 	vite: {
+		plugins: [
+			visualizer({
+				emitFile: true,
+				filename: "stats.html",
+				gzipSize: true,
+				brotliSize: true,
+			}),
+		],
 		build: {
 			rollupOptions: {
 				onwarn(warning, warn) {
@@ -165,6 +220,88 @@ export default defineConfig({
 						return;
 					}
 					warn(warning);
+				},
+				output: {
+					manualChunks: {
+						// Core framework chunks
+						"astro-core": ["astro"],
+						"svelte-core": ["svelte", "@astrojs/svelte"],
+
+						// UI and styling libraries
+						"ui-libs": ["@swup/astro", "overlayscrollbars", "photoswipe"],
+
+						// Icon libraries (large bundle)
+						icons: [
+							"astro-icon",
+							"@iconify/svelte",
+							"@iconify-json/fa6-brands",
+							"@iconify-json/fa6-regular",
+							"@iconify-json/fa6-solid",
+							"@iconify-json/material-symbols",
+						],
+
+						// Markdown and content processing
+						"markdown-processing": [
+							"markdown-it",
+							"remark-directive",
+							"remark-math",
+							"remark-sectionize",
+							"remark-github-admonitions-to-directives",
+							"rehype-autolink-headings",
+							"rehype-components",
+							"rehype-katex",
+							"rehype-slug",
+							"mdast-util-to-string",
+							"unist-util-visit",
+							"hastscript",
+						],
+
+						// Math and code highlighting
+						"math-and-code": [
+							"katex",
+							"astro-expressive-code",
+							"@expressive-code/core",
+							"@expressive-code/plugin-collapsible-sections",
+							"@expressive-code/plugin-line-numbers",
+						],
+
+						// Fonts (can be large)
+						fonts: [
+							"@fontsource-variable/jetbrains-mono",
+							"@fontsource/roboto",
+						],
+
+						// Utilities and smaller libraries
+						utils: ["reading-time", "sanitize-html", "sharp"],
+
+						// CSS and styling
+						styling: ["tailwindcss", "@tailwindcss/typography", "stylus"],
+					},
+					// Optimize chunk file names for better caching
+					chunkFileNames: (chunkInfo) => {
+						const facadeModuleId = chunkInfo.facadeModuleId
+							? chunkInfo.facadeModuleId
+									.split("/")
+									.pop()
+									.replace(/\.[^/.]+$/, "")
+							: "chunk";
+						return `assets/js/[name]-[hash].js`;
+					},
+					// Optimize asset file names
+					assetFileNames: (assetInfo) => {
+						const info = assetInfo.name.split(".");
+						const ext = info[info.length - 1];
+						if (/\.(css)$/.test(assetInfo.name)) {
+							return `assets/css/[name]-[hash].${ext}`;
+						}
+						if (/\.(png|jpe?g|svg|gif|tiff|bmp|ico)$/i.test(assetInfo.name)) {
+							return `assets/images/[name]-[hash].${ext}`;
+						}
+						if (/\.(woff2?|eot|ttf|otf)$/i.test(assetInfo.name)) {
+							return `assets/fonts/[name]-[hash].${ext}`;
+						}
+						return `assets/[name]-[hash].${ext}`;
+					},
 				},
 			},
 		},

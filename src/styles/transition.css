@@ -1,53 +1,229 @@
-/* Page transition animations with Swup */
-html.is-changing .transition-swup-fade {
-    @apply transition-all duration-200
-}
-html.is-animating .transition-swup-fade {
-    @apply opacity-0 translate-y-4
-}
-
-/* Fade-in animations for components */
-@keyframes fade-in-up {
-    0% {
-        transform: translateY(2rem);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-/* Main components */
-.onload-animation {
+/* page transition with swup */
+html.is-animating .transition-fade {
     opacity: 0;
-    animation: 300ms fade-in-up;
+    transform: translateY(10px);
+}
+
+/* fade in animation for components */
+.transition-fade {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fade-in-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes fade-in-up {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* slide in from left animation */
+.transition-slide-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    animation: slide-in-left 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes slide-in-left {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* slide in from right animation */
+.transition-slide-right {
+    opacity: 0;
+    transform: translateX(30px);
+    animation: slide-in-right 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes slide-in-right {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* scale in animation */
+.transition-scale {
+    opacity: 0;
+    transform: scale(0.95);
+    animation: scale-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes scale-in {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* navbar with slide from top */
+#navbar {
+    animation-delay: calc(var(--content-delay) + 0ms);
+    transform: translateY(-20px);
+    animation-name: slide-in-top;
+    animation-duration: 0.6s;
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     animation-fill-mode: forwards;
 }
-#navbar {
-    animation-delay: 0ms
+
+@keyframes slide-in-top {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
+/* sidebar with slide from left */
 #sidebar {
-    animation-delay: 100ms
+    animation-delay: calc(var(--content-delay) + 50ms);
+    opacity: 0;
+    transform: translateX(-30px);
+    animation-name: slide-in-left;
+    animation-duration: 0.7s;
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation-fill-mode: forwards;
 }
+
 #swup-container {
     outline: none;
 }
+
 #content-wrapper {
     animation-delay: var(--content-delay);
 }
+
 .footer {
     animation-delay: 250ms;
 }
+
 #banner-credit {
     animation-delay: 400ms;
 }
 
-/* Post content */
-#post-container :nth-child(1) { animation-delay: calc(var(--content-delay) + 0ms) }
-#post-container :nth-child(2) { animation-delay: calc(var(--content-delay) + 50ms) }
-#post-container :nth-child(3) { animation-delay: calc(var(--content-delay) + 100ms) }
-#post-container :nth-child(4) { animation-delay: calc(var(--content-delay) + 175ms) }
-#post-container :nth-child(5) { animation-delay: calc(var(--content-delay) + 250ms) }
-#post-container :nth-child(6) { animation-delay: calc(var(--content-delay) + 325ms) }
+/* post container with enhanced fade */
+#post-container {
+    animation-delay: calc(var(--content-delay) + 100ms);
+    opacity: 0;
+    transform: translateY(30px);
+    animation-name: fade-in-up-enhanced;
+    animation-duration: 0.8s;
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation-fill-mode: forwards;
+}
+
+@keyframes fade-in-up-enhanced {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* post container children with staggered animation */
+#post-container > :nth-child(1) {
+    animation-delay: calc(var(--content-delay) + 150ms);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fade-in-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+#post-container > :nth-child(2) {
+    animation-delay: calc(var(--content-delay) + 200ms);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fade-in-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+#post-container > :nth-child(3) {
+    animation-delay: calc(var(--content-delay) + 250ms);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fade-in-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+#post-container > :nth-child(4) {
+    animation-delay: calc(var(--content-delay) + 300ms);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fade-in-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+#post-container > :nth-child(5) {
+    animation-delay: calc(var(--content-delay) + 350ms);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fade-in-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+#post-container > :nth-child(6) {
+    animation-delay: calc(var(--content-delay) + 400ms);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fade-in-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* hover animations for interactive elements */
+.transition-hover {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.transition-hover:hover {
+    transform: translateY(-2px);
+}
+
+/* focus animations */
+.transition-focus {
+    transition: all 0.2s ease-out;
+}
+
+.transition-focus:focus {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+}
+
+/* loading animation */
+@keyframes pulse-glow {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+
+.animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* smooth page transitions */
+.page-transition-enter {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+}
+
+.page-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.page-transition-exit {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.page-transition-exit-active {
+    opacity: 0;
+    transform: translateY(-10px) scale(1.02);
+    transition: all 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
 

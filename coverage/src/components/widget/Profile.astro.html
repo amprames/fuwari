@@ -1,0 +1,226 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/components/widget/Profile.astro</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/widget</a> Profile.astro</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/46</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/46</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >---</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { Icon } from "astro-icon/components";</span>
+<span class="cstat-no" title="statement not covered" >import { profileConfig } from "../../config";</span>
+<span class="cstat-no" title="statement not covered" >import { sanitizeExternalUrl, url } from "../../utils/url-utils";</span>
+<span class="cstat-no" title="statement not covered" >import ImageWrapper from "../misc/ImageWrapper.astro";</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const config = profileConfig;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >// Filter and sanitize external links for security</span>
+<span class="cstat-no" title="statement not covered" >const safeLinks = config.links</span>
+<span class="cstat-no" title="statement not covered" >	.map((link) =&gt; ({</span>
+<span class="cstat-no" title="statement not covered" >		...link,</span>
+<span class="cstat-no" title="statement not covered" >		url: sanitizeExternalUrl(link.url),</span>
+<span class="cstat-no" title="statement not covered" >	}))</span>
+<span class="cstat-no" title="statement not covered" >	.filter((link) =&gt; link.url !== ""); // Remove invalid URLs</span>
+<span class="cstat-no" title="statement not covered" >---</span>
+<span class="cstat-no" title="statement not covered" >&lt;div class="card-base p-3"&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;a aria-label="Go to About Page" href={url('/about/')}</span>
+<span class="cstat-no" title="statement not covered" >       class="group block relative mx-auto mt-1 lg:mx-0 lg:mt-0 mb-3</span>
+<span class="cstat-no" title="statement not covered" >       max-w-[12rem] lg:max-w-none overflow-hidden rounded-xl active:scale-95"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="absolute transition pointer-events-none group-hover:bg-black/30 group-active:bg-black/50</span>
+<span class="cstat-no" title="statement not covered" >        w-full h-full z-50 flex items-center justify-center"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;Icon name="fa6-regular:address-card"</span>
+<span class="cstat-no" title="statement not covered" >                  class="transition opacity-0 scale-90 group-hover:scale-100 group-hover:opacity-100 text-white text-5xl"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/Icon&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;ImageWrapper src={config.avatar || ""} alt="Profile Image of the Author" class="mx-auto lg:w-full h-full lg:mt-0 "&gt;&lt;/ImageWrapper&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/a&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;div class="px-2"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="font-bold text-xl text-center mb-1 dark:text-neutral-50 transition"&gt;{config.name}&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="h-1 w-5 bg-[var(--primary)] mx-auto rounded-full mb-2 transition"&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="text-center text-neutral-400 mb-2.5 transition"&gt;{config.bio}&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="flex flex-wrap gap-2 justify-center mb-1"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            {safeLinks.length &gt; 1 &amp;&amp; safeLinks.map(item =&gt;</span>
+<span class="cstat-no" title="statement not covered" >                    &lt;a rel="me noopener noreferrer" aria-label={item.name} href={item.url} target="_blank" class="btn-regular rounded-lg h-10 w-10 active:scale-90"&gt;</span>
+<span class="cstat-no" title="statement not covered" >                        &lt;Icon name={item.icon} class="text-[1.5rem]"&gt;&lt;/Icon&gt;</span>
+<span class="cstat-no" title="statement not covered" >                    &lt;/a&gt;</span>
+<span class="cstat-no" title="statement not covered" >            )}</span>
+<span class="cstat-no" title="statement not covered" >            {safeLinks.length == 1 &amp;&amp; &lt;a rel="me noopener noreferrer" aria-label={safeLinks[0].name} href={safeLinks[0].url} target="_blank"</span>
+<span class="cstat-no" title="statement not covered" >                                            class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95"&gt;</span>
+<span class="cstat-no" title="statement not covered" >                &lt;Icon name={safeLinks[0].icon} class="text-[1.5rem]"&gt;&lt;/Icon&gt;</span>
+<span class="cstat-no" title="statement not covered" >                {safeLinks[0].name}</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/a&gt;}</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >&lt;/div&gt;</span>
+&nbsp;
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2025-10-10T09:00:18.324Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

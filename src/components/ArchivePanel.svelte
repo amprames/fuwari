@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMount } from "svelte";
 
-import I18nKey from "../i18n/i18nKey";
+import I18nKey from "../i18n/i18n-keys";
 import { i18n } from "../i18n/translation";
 import { getPostUrlBySlug } from "../utils/url-utils";
 

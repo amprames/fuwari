@@ -26,9 +26,25 @@ interface Props {
 	description?: string;
 	lang?: string;
 	setOGTypeArticle?: boolean;
+	image?: string;
+	publishedTime?: string;
+	modifiedTime?: string;
+	tags?: string[];
+	author?: string;
 }
 
-let { title, banner, description, lang, setOGTypeArticle } = Astro.props;
+let {
+	title,
+	banner,
+	description,
+	lang,
+	setOGTypeArticle,
+	image,
+	publishedTime,
+	modifiedTime,
+	tags,
+	author,
+} = Astro.props;
 
 // apply a class to the body element to decide the height of the banner, only used for initial page load
 // Swup can update the body for each page visit, but it's after the page transition, causing a delay for banner height change
@@ -82,22 +98,39 @@ const bannerOffset =
 
 		<meta charset="UTF-8" />
 		<meta name="description" content={description || pageTitle}>
-		<meta name="author" content={profileConfig.name}>
+		<meta name="author" content={author || profileConfig.name}>
+		{tags && tags.length > 0 && <meta name="keywords" content={tags.join(', ')}>}
 
+		<!-- Open Graph Meta Tags -->
 		<meta property="og:site_name" content={siteConfig.title}>
 		<meta property="og:url" content={Astro.url}>
 		<meta property="og:title" content={pageTitle}>
 		<meta property="og:description" content={description || pageTitle}>
+		<meta property="og:locale" content={siteLang}>
 		{setOGTypeArticle ? (
         <meta property="og:type" content="article" />
         ) : (
         <meta property="og:type" content="website" />
         )}
+		{image && <meta property="og:image" content={new URL(image, Astro.site).href}>}
+		{image && <meta property="og:image:alt" content={pageTitle}>}
+		{image && <meta property="og:image:type" content="image/png">}
+		{image && <meta property="og:image:width" content="1200">}
+		{image && <meta property="og:image:height" content="630">}
+		{setOGTypeArticle && publishedTime && <meta property="article:published_time" content={publishedTime}>}
+		{setOGTypeArticle && modifiedTime && <meta property="article:modified_time" content={modifiedTime}>}
+		{setOGTypeArticle && author && <meta property="article:author" content={author}>}
+		{setOGTypeArticle && tags && tags.map(tag => <meta property="article:tag" content={tag}>)}
 
-		<meta name="twitter:card" content="summary_large_image">
+		<!-- Twitter Card Meta Tags -->
+		<meta name="twitter:card" content={image ? "summary_large_image" : "summary"}>
+		<meta name="twitter:site" content={`@${siteConfig.title}`}>
+		<meta name="twitter:creator" content={`@${author || profileConfig.name}`}>
 		<meta property="twitter:url" content={Astro.url}>
 		<meta name="twitter:title" content={pageTitle}>
 		<meta name="twitter:description" content={description || pageTitle}>
+		{image && <meta name="twitter:image" content={new URL(image, Astro.site).href}>}
+		{image && <meta name="twitter:image:alt" content={pageTitle}>}
 
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
@@ -108,6 +141,13 @@ const bannerOffset =
 				  media={favicon.theme && `(prefers-color-scheme: ${favicon.theme})`}
 			/>
 		))}
+
+		<!-- Font preloads for critical resources to reduce FOIT -->
+		<link rel="preload" href="/node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-italic.woff2" as="font" type="font/woff2" crossorigin>
 
 		<!-- Set the theme before the page is rendered to avoid a flash -->
 		<script is:inline define:vars={{DEFAULT_THEME, LIGHT_MODE, DARK_MODE, AUTO_MODE, BANNER_HEIGHT_EXTEND, PAGE_WIDTH, configHue}}>
@@ -276,6 +316,72 @@ setClickOutsideToClose("display-setting", ["display-setting", "display-settings-
 setClickOutsideToClose("nav-menu-panel", ["nav-menu-panel", "nav-menu-switch"])
 setClickOutsideToClose("search-panel", ["search-panel", "search-bar", "search-switch"])
 
+// Keyboard navigation and focus management
+function initKeyboardNavigation() {
+	// Handle Escape key to close panels
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape") {
+			const openPanels = [
+				document.getElementById("display-setting"),
+				document.getElementById("nav-menu-panel"),
+				document.getElementById("search-panel"),
+				document.getElementById("light-dark-panel")
+			];
+			
+			openPanels.forEach(panel => {
+				if (panel && !panel.classList.contains("float-panel-closed")) {
+					panel.classList.add("float-panel-closed");
+					// Return focus to the trigger button
+					const triggerId = panel.getAttribute("aria-labelledby") || 
+									 (panel.id === "display-setting" ? "display-settings-switch" :
+									  panel.id === "nav-menu-panel" ? "nav-menu-switch" :
+									  panel.id === "search-panel" ? "search-switch" :
+									  "scheme-switch");
+					const trigger = document.getElementById(triggerId);
+					if (trigger) {
+						trigger.focus();
+						trigger.setAttribute("aria-expanded", "false");
+					}
+				}
+			});
+		}
+	});
+
+	// Handle Enter and Space keys for button activation
+	document.addEventListener("keydown", (event) => {
+		const target = event.target as HTMLElement;
+		if ((event.key === "Enter" || event.key === " ") && 
+			target.tagName === "BUTTON" && 
+			!(target as HTMLButtonElement).disabled) {
+			event.preventDefault();
+			target.click();
+		}
+	});
+
+	// Handle arrow key navigation in menus
+	document.addEventListener("keydown", (event) => {
+		const target = event.target as HTMLElement;
+		const menu = target.closest('[role="menu"]');
+		
+		if (menu && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
+			event.preventDefault();
+			const menuItems = Array.from(menu.querySelectorAll('[role="menuitem"]')) as HTMLElement[];
+			const currentIndex = menuItems.indexOf(target);
+			
+			let nextIndex;
+			if (event.key === "ArrowDown") {
+				nextIndex = currentIndex < menuItems.length - 1 ? currentIndex + 1 : 0;
+			} else {
+				nextIndex = currentIndex > 0 ? currentIndex - 1 : menuItems.length - 1;
+			}
+			
+			if (menuItems[nextIndex]) {
+				menuItems[nextIndex].focus();
+			}
+		}
+	});
+}
+
 
 function loadTheme() {
 	const theme = getStoredTheme()
@@ -368,6 +474,7 @@ function init() {
 	loadTheme();
 	loadHue();
 	initCustomScrollbar();
+	initKeyboardNavigation();
 	showBanner();
 }
 

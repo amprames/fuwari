@@ -4,6 +4,15 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+      time: "04:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "automated"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
     groups:
       patch-updates:
         patterns:
@@ -15,8 +24,20 @@ updates:
           - "*"
         update-types:
           - "minor"
+      dev-dependencies:
+        patterns:
+          - "@types/*"
+          - "@typescript-eslint/*"
+          - "eslint*"
+          - "prettier"
+          - "biome"
+          - "vite"
+          - "astro"
+        dependency-type: "development"
     pull-request-branch-name:
       separator: "-"
+    reviewers:
+      - "alvaro"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]

@@ -22,6 +22,11 @@ interface Props {
 	lang?: string;
 	setOGTypeArticle?: boolean;
 	headings?: MarkdownHeading[];
+	image?: string;
+	publishedTime?: string;
+	modifiedTime?: string;
+	tags?: string[];
+	author?: string;
 }
 
 const {
@@ -31,6 +36,11 @@ const {
 	lang,
 	setOGTypeArticle,
 	headings = [],
+	image,
+	publishedTime,
+	modifiedTime,
+	tags,
+	author,
 } = Astro.props;
 const hasBannerCredit =
 	siteConfig.banner.enable && siteConfig.banner.credit.enable;
@@ -41,7 +51,18 @@ const mainPanelTop = siteConfig.banner.enable
 	: "5.5rem";
 ---
 
-<Layout title={title} banner={banner} description={description} lang={lang} setOGTypeArticle={setOGTypeArticle}>
+<Layout 
+	title={title} 
+	banner={banner} 
+	description={description} 
+	lang={lang} 
+	setOGTypeArticle={setOGTypeArticle}
+	image={image}
+	publishedTime={publishedTime}
+	modifiedTime={modifiedTime}
+	tags={tags}
+	author={author}
+>
 
 <!-- Navbar -->
 <slot slot="head" name="head"></slot>

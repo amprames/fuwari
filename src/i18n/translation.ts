@@ -1,5 +1,5 @@
 import { siteConfig } from "../config";
-import type I18nKey from "./i18nKey";
+import type I18nKey from "./i18n-keys";
 import { en } from "./languages/en";
 import { es } from "./languages/es";
 import { id } from "./languages/id";
@@ -38,10 +38,20 @@ const map: { [key: string]: Translation } = {
 	tr_tr: tr,
 };
 
+/**
+ * Gets the translation object for a specific language
+ * @param lang - Language code (e.g., 'en', 'es', 'ja')
+ * @returns Translation object with all translated strings
+ */
 export function getTranslation(lang: string): Translation {
 	return map[lang.toLowerCase()] || defaultTranslation;
 }
 
+/**
+ * Gets a translated string for the current site language
+ * @param key - Translation key from I18nKey enum
+ * @returns Translated string in the current language
+ */
 export function i18n(key: I18nKey): string {
 	const lang = siteConfig.lang || "en";
 	return getTranslation(lang)[key];

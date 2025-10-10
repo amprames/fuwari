@@ -1,9 +1,15 @@
 ---
 import { Icon } from "astro-icon/components";
 import { licenseConfig, profileConfig } from "../../config";
-import I18nKey from "../../i18n/i18nKey";
+import I18nKey from "../../i18n/i18n-keys";
 import { i18n } from "../../i18n/translation";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
+import {
+	safeStringSchema,
+	safeValidate,
+	sanitizeHtmlContent,
+	urlSchema,
+} from "../../utils/validation-utils";
 
 interface Props {
 	title: string;
@@ -16,11 +22,18 @@ const { title, pubDate } = Astro.props;
 const className = Astro.props.class;
 const profileConf = profileConfig;
 const licenseConf = licenseConfig;
-const postUrl = decodeURIComponent(Astro.url.toString());
+
+// Sanitize and validate the post URL
+const rawPostUrl = decodeURIComponent(Astro.url.toString());
+const urlValidation = safeValidate(urlSchema, rawPostUrl);
+const postUrl = urlValidation.success ? urlValidation.data || rawPostUrl : "#";
+
+// Sanitize title to prevent XSS
+const safeTitle = sanitizeHtmlContent(title);
 ---
 <div class={`relative transition overflow-hidden bg-[var(--license-block-bg)] py-5 px-6 ${className}`}>
     <div class="transition font-bold text-black/75 dark:text-white/75">
-        {title}
+        {safeTitle}
     </div>
     <a href={postUrl} class="link text-[var(--primary)]">
         {postUrl}
