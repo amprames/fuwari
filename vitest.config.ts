@@ -1,8 +1,13 @@
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import tsconfigPaths from "vite-tsconfig-paths";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-	plugins: [svelte({ hot: !process.env.VITEST })],
+	plugins: [
+		svelte({ hot: !process.env.VITEST }),
+		// Usa los paths definidos en tsconfig.json
+		tsconfigPaths(),
+	],
 	test: {
 		globals: true,
 		environment: "jsdom",
@@ -18,19 +23,24 @@ export default defineConfig({
 				"**/*.d.ts",
 				"**/*.config.*",
 				"**/coverage/**",
+				"**/*.astro",
 			],
+			thresholds: {
+				lines: 80,
+				functions: 70,
+				branches: 70,
+				statements: 80,
+			},
 		},
 	},
 	resolve: {
-		alias: {
-			"@": "/src",
-			"@utils": "/src/utils",
-			"@components": "/src/components",
-			"@stores": "/src/stores",
-			"@constants": "/src/constants",
-			"@i18n": "/src/i18n",
+		// Mover los alias a tsconfig.json
+		alias: [
 			// Permitir resolver "astro:content" durante tests
-			"astro:content": "/src/test/mocks/astro-content.ts",
-		},
+			{
+				find: "astro:content",
+				replacement: "/src/test/mocks/astro-content.ts",
+			},
+		],
 	},
 });

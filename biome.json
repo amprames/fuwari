@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.2.4/schema.json",
 	"vcs": {
 		"enabled": false,
 		"clientKind": "git",
@@ -8,11 +8,19 @@
 	"files": {
 		"ignoreUnknown": false,
 		"includes": [
-			"**",
+			"**/*.ts",
+			"**/*.js",
+			"**/*.mjs",
+			"**/*.cjs",
+			"**/*.tsx",
+			"**/*.jsx",
+			"**/*.astro",
+			"**/*.svelte",
 			"!**/src/**/*.css",
 			"!**/src/public/**/*",
 			"!**/dist/**/*",
-			"!**/node_modules/**/*"
+			"!**/node_modules/**/*",
+			"!**/.astro/**/*"
 		]
 	},
 	"formatter": {
@@ -33,7 +41,16 @@
 	},
 	"overrides": [
 		{
-			"includes": ["**/*.svelte", "**/*.astro", "**/*.vue"],
+			"includes": ["astro.config.mjs"],
+			"formatter": {
+				"lineWidth": 100
+			}
+		},
+		{
+			"includes": ["**/*.svelte", "**/*.astro"],
+			"formatter": {
+				"lineWidth": 80
+			},
 			"linter": {
 				"rules": {
 					"style": {

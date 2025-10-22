@@ -12,7 +12,7 @@ import {
 
 // Helper to control BASE_URL used by url()
 const originalImportMeta = import.meta as unknown as {
-	env: Record<string, any>;
+	env: Record<string, unknown>;
 };
 
 describe("url-utils", () => {

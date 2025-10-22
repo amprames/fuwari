@@ -38,8 +38,10 @@ export type SiteConfig = {
 	favicon: Favicon[];
 };
 
+import type { ImageMetadata } from "astro";
+
 export type Favicon = {
-	src: string;
+	src: string | ImageMetadata;
 	theme?: "light" | "dark";
 	sizes?: string;
 };

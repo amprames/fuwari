@@ -2,6 +2,7 @@
 A static blog template built with [Astro](https://astro.build).
 
 [**🖥️ Live Demo (Vercel)**](https://fuwari.vercel.app)
+[![Coverage](https://img.shields.io/badge/coverage-80%25-brightgreen)](https://github.com/amprames/fuwari/actions)
 
 ![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
 
@@ -61,6 +62,60 @@ In addition to Astro's default support for [GitHub Flavored Markdown](https://gi
 - GitHub repository cards ([Preview and Usage](https://fuwari.vercel.app/posts/markdown-extended/#github-repository-cards))
 - Enhanced code blocks with Expressive Code ([Preview](https://fuwari.vercel.app/posts/expressive-code/) / [Docs](https://expressive-code.com/))
 
+## 🧪 Testing
+
+### Unit Tests with Vitest
+Run unit tests with the following commands:
+
+```bash
+# Run tests in watch mode
+pnpm test
+
+# Run tests with UI
+pnpm test:ui
+
+# Run tests once
+pnpm test:run
+
+# Generate test coverage report
+pnpm test:coverage
+```
+
+### End-to-End Testing with Cypress
+Run E2E tests with the following commands:
+
+```bash
+# Run E2E tests in headless mode
+pnpm test:e2e
+
+# Open Cypress Test Runner
+pnpm test:e2e:open
+
+# Run E2E tests in headed mode
+pnpm test:e2e:headed
+
+# Generate E2E test coverage report
+pnpm test:e2e:coverage
+```
+
+## 🔍 Bundle Analysis
+
+To analyze your bundle size and optimize it, you can use the `ANALYZE` environment variable:
+
+```bash
+# Run with bundle analysis
+ANALYZE=true pnpm build
+```
+
+This will generate an interactive visualization of your bundle that you can view in the browser.
+
+## 📝 Code Style & Conventions
+
+This project follows consistent coding standards and naming conventions. Please refer to the following documents:
+
+- [NAMING_CONVENTIONS.md](./NAMING_CONVENTIONS.md) - Guidelines for file, variable, and component naming
+- [.biome.json](./.biome.json) - Code formatting and linting rules
+
 ## ⚡ Commands
 
 All commands are run from the root of the project, from a terminal:
@@ -73,16 +128,20 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm preview`             | Preview your build locally, before deploying        |
 | `pnpm check`               | Run checks for errors in your code                  |
 | `pnpm format`              | Format your code using Biome                        |
+| `pnpm lint`                | Lint your code using Biome                          |
+| `pnpm test`                | Run unit tests with Vitest                          |
+| `pnpm test:e2e`            | Run E2E tests with Cypress                         |
 | `pnpm new-post <filename>` | Create a new post                                   |
 | `pnpm astro ...`           | Run CLI commands like `astro add`, `astro check`    |
 | `pnpm astro --help`        | Get help using the Astro CLI                        |
 
-## ✏️ Contributing
+## 📝 Creating a New Post
 
-Check out the [Contributing Guide](https://github.com/saicaca/fuwari/blob/main/CONTRIBUTING.md) for details on how to contribute to this project.
+To create a new blog post, run:
 
-## 📄 License
+```bash
+pnpm new-post "My Awesome Post Title"
+# or
+npm run new-post -- "My Awesome Post Title"
+```
 
-This project is licensed under the MIT License.
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsaicaca%2Ffuwari.svg?type=large&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsaicaca%2Ffuwari?ref=badge_large&issueType=license)

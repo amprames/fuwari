@@ -11,7 +11,7 @@ interface Props {
 
 const { type = "website", title, description, url, image } = Astro.props;
 
-let structuredData: any = {
+let structuredData: Record<string, unknown> = {
 	"@context": "https://schema.org",
 };
 

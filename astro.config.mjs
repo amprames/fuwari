@@ -50,14 +50,7 @@ export default defineConfig({
 		}),
 		icon({
 			include: {
-				"fa6-brands": [
-					"github",
-					"linkedin",
-					"twitter",
-					"mastodon",
-					"steam",
-					"creative-commons",
-				],
+				"fa6-brands": ["github", "linkedin", "twitter", "mastodon", "steam", "creative-commons"],
 				"fa6-regular": ["envelope", "copyright", "address-card"],
 				"fa6-solid": [
 					"arrow-rotate-left",
@@ -181,6 +174,8 @@ export default defineConfig({
 					behavior: "append",
 					properties: {
 						className: ["anchor"],
+						"aria-hidden": "true",
+						tabIndex: -1,
 					},
 					content: {
 						type: "element",
@@ -191,8 +186,49 @@ export default defineConfig({
 						},
 						children: [
 							{
-								type: "text",
-								value: "#",
+								type: "element",
+								tagName: "svg",
+								properties: {
+									xmlns: "http://www.w3.org/2000/svg",
+									width: 24,
+									height: 24,
+									viewBox: "0 0 24 24",
+									fill: "none",
+									stroke: "currentColor",
+									"stroke-width": "2",
+									"stroke-linecap": "round",
+									"stroke-linejoin": "round",
+									"aria-hidden": "true",
+								},
+								children: [
+									{
+										type: "element",
+										tagName: "path",
+										properties: {
+											d: "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71",
+										},
+									},
+									{
+										type: "element",
+										tagName: "path",
+										properties: {
+											d: "M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71",
+										},
+									},
+								],
+							},
+							{
+								type: "element",
+								tagName: "span",
+								properties: {
+									className: ["sr-only"],
+								},
+								children: [
+									{
+										type: "text",
+										value: "Enlace a esta sección",
+									},
+								],
 							},
 						],
 					},
@@ -266,10 +302,7 @@ export default defineConfig({
 						],
 
 						// Fonts (can be large)
-						fonts: [
-							"@fontsource-variable/jetbrains-mono",
-							"@fontsource/roboto",
-						],
+						fonts: ["@fontsource-variable/jetbrains-mono", "@fontsource/roboto"],
 
 						// Utilities and smaller libraries
 						utils: ["reading-time", "sanitize-html", "sharp"],
@@ -279,7 +312,7 @@ export default defineConfig({
 					},
 					// Optimize chunk file names for better caching
 					chunkFileNames: (chunkInfo) => {
-						const facadeModuleId = chunkInfo.facadeModuleId
+						const _facadeModuleId = chunkInfo.facadeModuleId
 							? chunkInfo.facadeModuleId
 									.split("/")
 									.pop()

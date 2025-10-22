@@ -2,5 +2,15 @@ exclude_selectors:
   - "span.katex"
   - "span.katex-display"
   - "[data-pagefind-ignore]"
+  - "[data-nosnippet]"
   - ".search-panel"
   - "#search-panel"
+
+# i18n configuration for better tokenization
+language: "es"  # Set to the primary language of your content
+# Uncomment and configure additional languages if needed
+# language: "multilingual"
+# base_language: "es"
+# translations:
+#   - language: "en"
+#     base: "en"

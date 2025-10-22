@@ -134,8 +134,8 @@ const handleKeydown = (event: KeyboardEvent) => {
 		const resultLinks = document.querySelectorAll(
 			"#search-panel .search-result-link",
 		);
-		const currentIndex = Array.from(resultLinks).findIndex(
-			(link) => link === document.activeElement,
+		const currentIndex = Array.from(resultLinks).indexOf(
+			document.activeElement as Element,
 		);
 
 		let nextIndex: number;

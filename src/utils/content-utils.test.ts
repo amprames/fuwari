@@ -150,7 +150,7 @@ describe("content-utils", () => {
 	});
 
 	it("filtra drafts en PROD", async () => {
-		(import.meta as any).env.PROD = true;
+		(import.meta as { env: { PROD: boolean } }).env.PROD = true;
 		simulateProd = true;
 		const list = await Mod.getSortedPosts();
 		// c era draft -> fuera

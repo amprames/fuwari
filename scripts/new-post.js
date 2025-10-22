@@ -1,59 +1,77 @@
 /* This is a script to create a new post markdown file with front-matter */
 
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
-function getDate() {
-	const today = new Date();
-	const year = today.getFullYear();
-	const month = String(today.getMonth() + 1).padStart(2, "0");
-	const day = String(today.getDate()).padStart(2, "0");
+function getISODate() {
+	return new Date().toISOString();
+}
 
-	return `${year}-${month}-${day}`;
+function slugify(text) {
+	return text
+		.toString()
+		.toLowerCase()
+		.trim()
+		.replace(/\s+/g, "-")
+		.replace(/[^\w-]+/g, "")
+		.replace(/--+/g, "-")
+		.replace(/^-+/, "")
+		.replace(/-+$/, "");
+}
+
+function checkSlugCollision(directory, slug) {
+	const files = fs.readdirSync(directory);
+	return files.some((file) => {
+		const fileSlug = path.basename(file, path.extname(file));
+		return fileSlug === slug;
+	});
 }
 
 const args = process.argv.slice(2);
 
 if (args.length === 0) {
-	console.error(`Error: No filename argument provided
-Usage: npm run new-post -- <filename>`);
-	process.exit(1); // Terminate the script and return error code 1
-}
-
-let fileName = args[0];
-
-// Add .md extension if not present
-const fileExtensionRegex = /\.(md|mdx)$/i;
-if (!fileExtensionRegex.test(fileName)) {
-	fileName += ".md";
-}
-
-const targetDir = "./src/content/posts/";
-const fullPath = path.join(targetDir, fileName);
-
-if (fs.existsSync(fullPath)) {
-	console.error(`Error: File ${fullPath} already exists `);
+	console.error(`Error: No title provided
+Usage: npm run new-post -- "Your Post Title Here"`);
 	process.exit(1);
 }
 
-// recursive mode creates multi-level directories
-const dirPath = path.dirname(fullPath);
-if (!fs.existsSync(dirPath)) {
-	fs.mkdirSync(dirPath, { recursive: true });
+const title = args[0].trim();
+const slug = slugify(title);
+const targetDir = "./src/content/posts/";
+
+// Ensure target directory exists
+if (!fs.existsSync(targetDir)) {
+	fs.mkdirSync(targetDir, { recursive: true });
 }
 
-const content = `---
-title: ${args[0]}
-published: ${getDate()}
-description: ''
-image: ''
+// Check for slug collisions
+if (checkSlugCollision(targetDir, slug)) {
+	console.error(`Error: A post with the slug "${slug}" already exists`);
+	process.exit(1);
+}
+
+const fileName = `${slug}.md`;
+const fullPath = path.join(targetDir, fileName);
+
+const frontmatter = `---
+title: "${title}"
+published: "${getISODate()}"
+description: ""
+image: ""
 tags: []
-category: ''
-draft: false 
-lang: ''
+category: ""
+draft: true
+lang: ""
 ---
 `;
 
-fs.writeFileSync(path.join(targetDir, fileName), content);
-
-console.log(`Post ${fullPath} created`);
+try {
+	fs.writeFileSync(fullPath, frontmatter);
+	console.log(`✅ Created new post: ${fullPath}`);
+	console.log(
+		`📝 Edit the file to add your content and set draft: false when ready to publish.`,
+	);
+} catch (error) {
+	console.error(`❌ Error creating post: ${error.message}`);
+	process.exit(1);
+}

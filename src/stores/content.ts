@@ -62,7 +62,6 @@ export const filteredPosts = computed(
 				case "title":
 					comparison = a.data.title.localeCompare(b.data.title);
 					break;
-				case "date":
 				default:
 					comparison =
 						new Date(a.data.published).getTime() -
