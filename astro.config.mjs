@@ -246,6 +246,9 @@ export default defineConfig({
 			}),
 		],
 		build: {
+			// Optimize for production
+			minify: true,
+			sourcemap: false, // Disable sourcemaps in production for smaller bundles
 			rollupOptions: {
 				onwarn(warning, warn) {
 					// temporarily suppress this warning
@@ -259,55 +262,62 @@ export default defineConfig({
 				},
 				output: {
 					manualChunks: {
-						// Core framework chunks
+						// Core framework chunks - keep separate for better caching
 						"astro-core": ["astro"],
 						"svelte-core": ["svelte", "@astrojs/svelte"],
 
-						// UI and styling libraries
+						// UI and styling libraries - group by functionality
 						"ui-libs": ["@swup/astro", "overlayscrollbars", "photoswipe"],
 
-						// Icon libraries (large bundle)
-						icons: [
+						// Icon libraries - split by usage frequency
+						"icons-core": [
 							"astro-icon",
 							"@iconify/svelte",
-							"@iconify-json/fa6-brands",
-							"@iconify-json/fa6-regular",
-							"@iconify-json/fa6-solid",
-							"@iconify-json/material-symbols",
+							"@iconify-json/material-symbols", // Most used
+						],
+						"icons-fa6": [
+							"@iconify-json/fa6-brands", // Social media icons
+							"@iconify-json/fa6-regular", // UI icons
+							"@iconify-json/fa6-solid", // Action icons
 						],
 
-						// Markdown and content processing
-						"markdown-processing": [
+						// Markdown processing - split by complexity
+						"markdown-core": [
 							"markdown-it",
 							"remark-directive",
-							"remark-math",
 							"remark-sectionize",
-							"remark-github-admonitions-to-directives",
 							"rehype-autolink-headings",
 							"rehype-components",
-							"rehype-katex",
 							"rehype-slug",
 							"mdast-util-to-string",
 							"unist-util-visit",
 							"hastscript",
 						],
+						"markdown-advanced": [
+							"remark-math",
+							"remark-github-admonitions-to-directives",
+							"rehype-katex",
+						],
 
-						// Math and code highlighting
-						"math-and-code": [
-							"katex",
+						// Code highlighting - separate for better caching
+						"code-highlighting": [
 							"astro-expressive-code",
 							"@expressive-code/core",
 							"@expressive-code/plugin-collapsible-sections",
 							"@expressive-code/plugin-line-numbers",
 						],
 
-						// Fonts (can be large)
+						// Math rendering - separate chunk
+						math: ["katex"],
+
+						// Fonts - separate for better caching
 						fonts: ["@fontsource-variable/jetbrains-mono", "@fontsource/roboto"],
 
-						// Utilities and smaller libraries
-						utils: ["reading-time", "sanitize-html", "sharp"],
+						// Utilities - group by size
+						"utils-small": ["reading-time", "sanitize-html"],
+						"utils-large": ["sharp"],
 
-						// CSS and styling
+						// CSS and styling - separate for better caching
 						styling: ["tailwindcss", "@tailwindcss/typography", "stylus"],
 					},
 					// Optimize chunk file names for better caching
@@ -318,7 +328,10 @@ export default defineConfig({
 									.pop()
 									.replace(/\.[^/.]+$/, "")
 							: "chunk";
-						return `assets/js/[name]-[hash].js`;
+
+						// Use shorter names for better performance
+						const chunkName = chunkInfo.name || _facadeModuleId;
+						return `assets/js/${chunkName}-[hash].js`;
 					},
 					// Optimize asset file names
 					assetFileNames: (assetInfo) => {

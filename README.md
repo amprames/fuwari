@@ -145,3 +145,87 @@ pnpm new-post "My Awesome Post Title"
 npm run new-post -- "My Awesome Post Title"
 ```
 
+## 🛠️ Development Guide
+
+### Project Structure
+
+```
+src/
+├── components/          # Reusable UI components
+│   ├── control/        # Interactive controls (pagination, etc.)
+│   ├── misc/          # Miscellaneous components
+│   ├── seo/           # SEO-related components
+│   └── widget/        # Sidebar widgets
+├── constants/         # Application constants
+├── content/           # Content collections (posts, pages)
+├── i18n/             # Internationalization
+├── layouts/          # Page layouts
+├── pages/            # File-based routing
+├── plugins/          # Custom plugins and utilities
+├── stores/           # State management (Svelte stores)
+├── styles/           # Global styles and themes
+├── types/            # TypeScript type definitions
+└── utils/            # Utility functions
+```
+
+### Code Organization
+
+- **Components**: Organized by functionality (control, misc, seo, widget)
+- **Utils**: Grouped by purpose (content, date, seo, url, validation)
+- **Stores**: Svelte stores for state management
+- **Types**: Centralized TypeScript definitions
+- **Constants**: Application-wide constants and configurations
+
+### Testing Strategy
+
+- **Unit Tests**: Vitest for utility functions and stores
+- **E2E Tests**: Cypress for user interactions
+- **Coverage**: Minimum 80% line coverage, 70% function/branch coverage
+- **Test Files**: Co-located with source files (`.test.ts`)
+
+### Performance Optimizations
+
+- **Bundle Splitting**: Intelligent chunk separation for better caching
+- **Lazy Loading**: Images and components loaded on demand
+- **Tree Shaking**: Dead code elimination for smaller bundles
+- **Font Preloading**: Critical fonts loaded immediately
+- **Icon Optimization**: Icons split by usage frequency
+
+### Best Practices
+
+1. **Type Safety**: Use TypeScript for all new code
+2. **Component Design**: Keep components small and focused
+3. **Performance**: Use lazy loading and code splitting
+4. **Accessibility**: Include ARIA labels and keyboard navigation
+5. **SEO**: Implement proper meta tags and structured data
+6. **Testing**: Write tests for new functionality
+7. **Documentation**: Document complex logic and APIs
+
+## 🚀 Deployment
+
+### Build Optimization
+
+The project includes several build optimizations:
+
+- **Bundle Analysis**: Run `ANALYZE=true pnpm build` to generate bundle analysis
+- **Chunk Optimization**: Dependencies split by functionality for better caching
+- **Asset Optimization**: Images and fonts optimized automatically
+- **Code Splitting**: Dynamic imports for better performance
+
+### Environment Variables
+
+```bash
+# Development
+NODE_ENV=development
+
+# Production
+NODE_ENV=production
+ANALYZE=true  # Enable bundle analysis
+```
+
+### Performance Monitoring
+
+- **Core Web Vitals**: Monitor LCP, FID, CLS
+- **Bundle Size**: Track bundle size with build analysis
+- **Loading Performance**: Use lazy loading and preloading strategies
+
